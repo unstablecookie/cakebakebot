@@ -21,6 +21,22 @@ public class LanguageHelper {
 			"неверно указан параметр, укажите /deletewish ПОЖЕЛАНИЕ",
 			"wrong attributes , please use '/deletewish WISH'"};
 	
+	public static String[] birthdayWish = new String[] {
+			"! и желаю тебе :",
+			"and i wish you : "};
+	
+	public static String[] birthdayAddWish = new String[] {
+			"! и желаю добавить еще желаний!",
+			"! and please add more wishes!"};
+	
+	public static String[] happyBirthday = new String[] {
+			"С днем рождения ",
+			"happy birthday! to "};
+	
+	public static String[] and = new String[] {
+			" и ",
+			" and "};
+	
 	public static String[] startInfo = new String[] {
 			"я умею поздравлять с днем рождения \n"+
 			"и поддерживаю следующие команды: \n"+

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class BirthdaysCheck extends Thread {
 	
 	public CakebakeBot cakebakeBot;
+	private int launguageId = 0;// use it as an array pointer with your language . 0 for Russian , 1 for English etc.
 	
 	public BirthdaysCheck(CakebakeBot cakebakeBot) {
 		this.cakebakeBot = cakebakeBot;
@@ -26,9 +27,12 @@ public class BirthdaysCheck extends Thread {
 					Random random = new Random();
 					int max = cakebakeBot.wishes.size();
 					if(max<3) {
-						cakebakeBot.sendIt("С днем рождения "+entry.getKey()+"! и желаю добавить еще желаний!");
+						cakebakeBot.sendIt(LanguageHelper.happyBirthday[launguageId]+entry.getKey()+LanguageHelper.birthdayAddWish[launguageId]);
 					}else {
-						cakebakeBot.sendIt("С днем рождения "+entry.getKey()+"! и желаю тебе :"+cakebakeBot.wishes.get(random.nextInt(max))+" ,"+cakebakeBot.wishes.get(random.nextInt(max))+" и "+cakebakeBot.wishes.get(random.nextInt(max)));
+						cakebakeBot.sendIt(LanguageHelper.happyBirthday[launguageId]+entry.getKey()+LanguageHelper.birthdayWish[launguageId]+
+								cakebakeBot.wishes.get(random.nextInt(max))+
+								" ,"+cakebakeBot.wishes.get(random.nextInt(max))+
+								LanguageHelper.and[launguageId]+cakebakeBot.wishes.get(random.nextInt(max)));
 					}
 				}
 			}

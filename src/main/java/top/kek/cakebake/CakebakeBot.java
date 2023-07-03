@@ -167,7 +167,6 @@ public ArrayList<String> wishes = new ArrayList<>();
 	public void readWishes() {
 		try(FileInputStream in = new FileInputStream(fileWish);
 				ObjectInputStream ois = new ObjectInputStream(in)){
-			//map = (HashMap<String,LocalDate>)ois.readObject();
 			wishes = (ArrayList<String>)ois.readObject();
 		}catch(EOFException e) {
 			sendIt("no whishes!");

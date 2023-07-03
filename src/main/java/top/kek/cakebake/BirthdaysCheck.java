@@ -34,7 +34,6 @@ public class BirthdaysCheck extends Thread {
 			}
 			try{
 				Thread.sleep(7200000);
-				//Thread.sleep(7200);
 			}catch(InterruptedException e) {
 				System.out.println("interrupted : "+e.toString());
 			}

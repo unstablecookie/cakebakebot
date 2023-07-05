@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.lang.ClassNotFoundException;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
 
 public class CakebakeBot extends TelegramLongPollingBot {
@@ -27,9 +29,9 @@ public class CakebakeBot extends TelegramLongPollingBot {
 public Map<String,LocalDate> map = new HashMap<>();
 private File file = new File("birthdays");
 private File fileWish = new File("wishes");
-private String chatId = new String("0");// your group id. it will get updated  with the first message
+private String chatId = new String("00000000");// your group id. it will get updated  with the first message
 private int launguageId = 0;// use it as an array pointer with your language . 0 for Russian , 1 for English etc.
-public ArrayList<String> wishes = new ArrayList<>();
+public List<String> wishes = new ArrayList<>();
 	public CakebakeBot() {
 		if(file.isFile()) {
 			readBirthdays();
@@ -62,8 +64,10 @@ public ArrayList<String> wishes = new ArrayList<>();
 				readBirthdays();
 				if(map.size()==0) return;
 				StringBuilder strbld = new StringBuilder();
+				synchronized(map) {
 				for(Map.Entry<String,LocalDate> entry:map.entrySet()) {
 					strbld.append(entry.getKey()).append("-").append(entry.getValue().getMonth().toString()).append(" ").append(entry.getValue().getDayOfMonth()).append("\n");
+				}
 				}
 				sendIt(update,strbld.toString());
 				return;
@@ -74,8 +78,9 @@ public ArrayList<String> wishes = new ArrayList<>();
 					String name = arr[1];
 					String[] strDate = arr[2].split("-");
 					LocalDate date = LocalDate.of(2023, Integer.valueOf(strDate[0]), Integer.valueOf(strDate[1]));
+					synchronized(map) {
 					map.putIfAbsent(name, date);
-					updateBirthdays();
+					updateBirthdays();}
 					sendIt(update,LanguageHelper.updated[launguageId]);
 				}
 				return;
@@ -84,8 +89,10 @@ public ArrayList<String> wishes = new ArrayList<>();
 				StringBuilder strbld = new StringBuilder();
 				if(wishes.size()==0) return;
 				strbld.append(LanguageHelper.wishes[launguageId]);
+				synchronized(wishes) {
 				for(String s: wishes) {
 					strbld.append(s).append(", ");
+				}
 				}
 				sendIt(update,strbld.toString());
 				return;
@@ -97,8 +104,10 @@ public ArrayList<String> wishes = new ArrayList<>();
 					for(int i=1;i<arr.length;i++) {
 						strbld.append(arr[i]).append(" ");
 					}
+					synchronized(wishes) {
 					wishes.add(strbld.toString());
 					updateWishes();
+					}
 					sendIt(update,LanguageHelper.updated[launguageId]);
 				}
 				return;
@@ -106,8 +115,9 @@ public ArrayList<String> wishes = new ArrayList<>();
 				sendIt(update,LanguageHelper.startInfo[launguageId]);
 			}else if(arr[0].equals("/deletebday")) {
 				if(arr.length<2) sendIt(update,LanguageHelper.deleteBday[launguageId]);
+				synchronized(map) {
 				map.remove(arr[1]);
-				updateBirthdays();
+				updateBirthdays();}
 				sendIt(update,LanguageHelper.updated[launguageId]);
 			}else if(arr[0].equals("/deletewish")) {
 				if(arr.length<2) sendIt(update,LanguageHelper.deleteWish[launguageId]);
@@ -152,7 +162,9 @@ public ArrayList<String> wishes = new ArrayList<>();
 		try(FileInputStream in = new FileInputStream(file);
 				ObjectInputStream ois = new ObjectInputStream(in)){
 			System.out.println("reading file...");
+			synchronized(map) {
 			map = (HashMap<String,LocalDate>)ois.readObject();
+			}
 		}catch(EOFException e) {
 			sendIt("no birthdays!");
 		}catch(FileNotFoundException e) {
@@ -167,7 +179,9 @@ public ArrayList<String> wishes = new ArrayList<>();
 	public void readWishes() {
 		try(FileInputStream in = new FileInputStream(fileWish);
 				ObjectInputStream ois = new ObjectInputStream(in)){
+			synchronized(wishes) {
 			wishes = (ArrayList<String>)ois.readObject();
+			}
 		}catch(EOFException e) {
 			sendIt("no whishes!");
 		}catch(FileNotFoundException e) {
@@ -207,7 +221,7 @@ public ArrayList<String> wishes = new ArrayList<>();
 	
 	@Override
 	 public String getBotToken() {
-		 return "0";//your bot token!
+		 return "00000000000000000000000000000000000000000";//your bot token!
 	 }
 
 }

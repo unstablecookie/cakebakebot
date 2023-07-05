@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.lang.InterruptedException;
 import java.util.Random;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BirthdaysCheck extends Thread {
 	
@@ -20,10 +23,14 @@ public class BirthdaysCheck extends Thread {
 	public void run()  {
 		while(true) {
 			LocalDate currentDate = LocalDate.now();
+			Map<String,LocalDate> map = Collections.synchronizedMap(cakebakeBot.map);
+			
+			synchronized(map) {
 			for(Map.Entry<String, LocalDate> entry: cakebakeBot.map.entrySet()) {
 				LocalDate entryDate = entry.getValue();
 				if((currentDate.getDayOfMonth()==(entryDate.getDayOfMonth()))&(currentDate.getMonth().equals(entryDate.getMonth()))&((LocalDateTime.now().getHour()>10)&(LocalDateTime.now().getHour()<13))) {
-					
+					List<String> list = cakebakeBot.wishes;
+					synchronized(list) {
 					Random random = new Random();
 					int max = cakebakeBot.wishes.size();
 					if(max<3) {
@@ -34,7 +41,9 @@ public class BirthdaysCheck extends Thread {
 								" ,"+cakebakeBot.wishes.get(random.nextInt(max))+
 								LanguageHelper.and[launguageId]+cakebakeBot.wishes.get(random.nextInt(max)));
 					}
+					}
 				}
+			}
 			}
 			try{
 				Thread.sleep(7200000);

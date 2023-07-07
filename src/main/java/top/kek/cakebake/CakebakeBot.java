@@ -105,7 +105,7 @@ public List<String> wishes = new ArrayList<>();
 						strbld.append(arr[i]).append(" ");
 					}
 					synchronized(wishes) {
-					wishes.add(strbld.toString());
+					wishes.add(strbld.toString().trim());
 					updateWishes();
 					}
 					sendIt(update,LanguageHelper.updated[launguageId]);
@@ -121,13 +121,20 @@ public List<String> wishes = new ArrayList<>();
 				sendIt(update,LanguageHelper.updated[launguageId]);
 			}else if(arr[0].equals("/deletewish")) {
 				if(arr.length<2) sendIt(update,LanguageHelper.deleteWish[launguageId]);
+				StringBuilder strbld = new StringBuilder();
+				for(int i=1;i<arr.length;i++) {
+					strbld.append(arr[i]).append(" ");
+				}
+				String delWish = strbld.toString().trim();
+				synchronized(wishes) {
 				for(int i=0;i<wishes.size();i++) {
-					if(wishes.get(i).equals(arr[1])) {
+					if(wishes.get(i).equals(delWish)) {
 						wishes.remove(i);
 						updateWishes();
 						sendIt(update,LanguageHelper.updated[launguageId]);
 						return;
 					}
+				}
 				}
 			}
 			
@@ -221,7 +228,7 @@ public List<String> wishes = new ArrayList<>();
 	
 	@Override
 	 public String getBotToken() {
-		 return "00000000000000000000000000000000000000000";//your bot token!
+		 return "oooooooooooooooooooooooooooooooooooooooooooooooo";//your bot token!
 	 }
 
 }

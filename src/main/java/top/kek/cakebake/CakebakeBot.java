@@ -29,7 +29,7 @@ public class CakebakeBot extends TelegramLongPollingBot {
 public Map<String,LocalDate> map = new HashMap<>();
 private File file = new File("birthdays");
 private File fileWish = new File("wishes");
-private String chatId = new String("00000000");// your group id. it will get updated  with the first message
+private String chatId = new String("oooooooooo");// your group id. it will get updated  with the first message
 private int launguageId = 0;// use it as an array pointer with your language . 0 for Russian , 1 for English etc.
 public List<String> wishes = new ArrayList<>();
 	public CakebakeBot() {
@@ -39,7 +39,7 @@ public List<String> wishes = new ArrayList<>();
 			try {
 				file.createNewFile();
 			}catch(IOException e) {
-				System.out.println("failed to create the file : "+e.toString());
+				e.printStackTrace();
 			}
 		}
 		if(fileWish.isFile()) {
@@ -48,7 +48,7 @@ public List<String> wishes = new ArrayList<>();
 			try{
 				fileWish.createNewFile();
 			}catch(IOException e) {
-				System.out.println("failed to create the file : "+e.toString());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -228,7 +228,11 @@ public List<String> wishes = new ArrayList<>();
 	
 	@Override
 	 public String getBotToken() {
-		 return "oooooooooooooooooooooooooooooooooooooooooooooooo";//your bot token!
+		 return "oooooooooooooooooooooooooooooooooooooooo";//your bot token!
 	 }
+	
+	public String getChatId() {
+		return this.chatId;
+	}
 
 }

@@ -167,24 +167,28 @@ public List<String> wishes = new ArrayList<>();
 	public void updateBirthdays() {
 		try(FileOutputStream out = new FileOutputStream(file);
 				ObjectOutputStream oos = new ObjectOutputStream(out)){
-			oos.writeObject(map);
-			oos.flush();
+			synchronized(map) {
+				oos.writeObject(map);
+				oos.flush();
+			}
 		}catch(FileNotFoundException e) {
-			System.out.println("failed to write data : "+e.toString());
+			e.printStackTrace();
 		}catch(IOException  e) {
-			System.out.println("failed to write data : "+e.toString());
+			e.printStackTrace();
 		}
 	}
 	
 	public void updateWishes() {
 		try(FileOutputStream out = new FileOutputStream(fileWish);
 				ObjectOutputStream oos = new ObjectOutputStream(out)){
-			oos.writeObject(wishes);
-			oos.flush();
+			synchronized(wishes) {
+				oos.writeObject(wishes);
+				oos.flush();
+			}
 		}catch(FileNotFoundException e) {
-			System.out.println("failed to write data : "+e.toString());
+			e.printStackTrace();
 		}catch(IOException  e) {
-			System.out.println("failed to write data : "+e.toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -198,11 +202,11 @@ public List<String> wishes = new ArrayList<>();
 		}catch(EOFException e) {
 			sendIt("no birthdays!");
 		}catch(FileNotFoundException e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}catch(IOException  e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}
 	}
 	
@@ -215,11 +219,11 @@ public List<String> wishes = new ArrayList<>();
 		}catch(EOFException e) {
 			sendIt("no whishes!");
 		}catch(FileNotFoundException e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}catch(IOException  e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}catch(ClassNotFoundException e) {
-			System.out.println("failed to read data : "+e.toString());
+			e.printStackTrace();
 		}
 	}
 	

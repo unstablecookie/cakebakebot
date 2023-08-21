@@ -26,6 +26,7 @@ public class BirthdaysCheck extends Thread {
 	
 	public void run()  {
 		while(running.get()) {
+			if (Thread.currentThread().isInterrupted()) break;
 			try{
 				LocalDate currentDate = LocalDate.now();
 				Map<String,LocalDate> map = Collections.synchronizedMap(cakebakeBot.map);

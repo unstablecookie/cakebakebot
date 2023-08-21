@@ -7,7 +7,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		CakebakeBot cakebakeBot ;
 		if(args.length==2) cakebakeBot = new CakebakeBot(args[0],args[1]);
@@ -19,6 +19,8 @@ public class Main {
 	            e.printStackTrace();
 	        }
 		BirthdaysCheck birthdaysCheck = new BirthdaysCheck(cakebakeBot);
+		birthdaysCheck.setDaemon(true);
 		birthdaysCheck.start();
+		
 	}
 }
